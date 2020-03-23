@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "build": "parcel build -d docs --public-url /covid_tracker  graph/index.html"
   },
   "keywords": [],
   "author": "",
