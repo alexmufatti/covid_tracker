@@ -20,18 +20,15 @@ function createSeries(response, countryCode, offset, name, province) {
     var data = [];
 
     let i = 0;
-    while (check) {
+    while (data.length < Object.keys(values).length) {
         let date = moment().subtract(i, 'days').format("M/D/YY");
         let p = values[date];
-        if (p) {
-            hasValue = true;
             data.push(p);
-        } else {
-            if (hasValue)
-                check = false;
-        }
+
         i++;
     }
+    let j = 0;
+    while ( !data[j]) {data.shift();}
     data.reverse();
     for (let j = 0; j < offset; j++) {
         data.shift();
@@ -42,15 +39,15 @@ function createSeries(response, countryCode, offset, name, province) {
 
 function createChart(response) {
     var ctx = document.getElementById('myChart');
-    var gapCH = document.getElementById('CH').value;
+    var gapES = document.getElementById('ES').value;
     var gapDE = document.getElementById('DE').value;
     var gapFR = document.getElementById('FR').value;
     var gapKO = document.getElementById('KO').value;
     var gapJP = document.getElementById('JP').value;
-    var gapIT = document.getElementById('IT').value;
+    var gapCH = document.getElementById('CH').value;
 
-    const dataCN = createSeries(response, 'CN',0,'','Hubei');
-    const dataIT = createSeries(response, 'IT', +gapIT, '', '');
+    const dataES = createSeries(response, 'ES',+gapES,'','');
+    const dataIT = createSeries(response, 'IT', 0, '', '');
     const dataCH = createSeries(response, 'CH', +gapCH, '', '');
     const dataFR = createSeries(response, 'FR', +gapFR, '', '');
     const dataDE = createSeries(response, 'DE', +gapDE, '', '');
@@ -106,8 +103,8 @@ function createChart(response) {
                         spanGaps: false
                     },
                     {
-                        label: 'CN',
-                        data: dataCN,
+                        label: 'ES',
+                        data: dataES,
                         borderWidth: 1,
                         fill: false,
                         borderColor: 'gray',
@@ -121,7 +118,7 @@ function createChart(response) {
                 },
                 title: {
                     display: true,
-                    text: 'Chart.js Line Chart'
+                    text: 'Covid-19 confirmed cases'
                 },
                 tooltips: {
                     mode: 'index',
@@ -186,8 +183,8 @@ function createChart(response) {
                 spanGaps: false
             },
             {
-                label: 'CN',
-                data: dataCN,
+                label: 'ES',
+                data: dataES,
                 borderWidth: 1,
                 fill: false,
                 borderColor: 'gray',
