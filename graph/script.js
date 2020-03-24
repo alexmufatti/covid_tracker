@@ -5,7 +5,7 @@ import moment from "moment";
 var myChart = null;
 
 function getData(response, t, country, name, province) {
-    return response.data[t].locations.find(l => province !== '' ? l.province === province : country === 'XX' ? l.country === name : l.country_code === country).history;
+    return response.data[t].locations.find( l => l.country_code === country && l.province === province).history;
 }
 
 function getCountryData(response, country, name, province) {
@@ -134,7 +134,17 @@ function createChart(response) {
                     }],
                     yAxes: [{
                         type: 'logarithmic',
-                        display: true
+                        display: true,
+                        ticks: {
+                            min: 0,
+                            callback: function (value, index, values) {
+                                return value;
+                            }
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Y Axis'
+                        }
                     }]
                 }
             }
