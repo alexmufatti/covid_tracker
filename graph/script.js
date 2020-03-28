@@ -10,7 +10,7 @@ let countries = null;
 let colletion = 'confirmed';
 
 function getData(t,idx) {
-    return countries[idx][t];
+    return countries.find(c => c.index === +idx)[t];
 }
 
 function getCountryData(idx) {
@@ -49,7 +49,7 @@ function createData(response) {
             return {
                 selected: l.country_code === 'IT' || (l.country_code === 'FR' && l.province === '') || l.country_code === 'DE' || l.country_code === 'CH',
                 index: idx,
-                name: l.country_code+" - " +l.province,
+                name: l.country + (l.province? (" - " +l.province):''),
                 cc: l.country_code,
                 offset: 0,
                 confirmed: response.data.confirmed.locations[idx].history,
@@ -136,41 +136,26 @@ function createChart() {
 }
 
 function createChecks() {
-    $("#check-container").empty();
-    $("#offset_container").empty();
-    countries.forEach( l => {
+    $(".check-container").empty();
+    countries.sort((c1, c2) => {
+        if (c1.selected === c2.selected) return c1.name.localeCompare(c2.name);
+        return c1.selected ? -1 : 1;
+    }).forEach( l => {
         let id = 'id_'+l.index;
-        let elem = "<div><label for='"+ id + "'>"+l.name +
-            "</label><input type='checkbox' id='"+id+"' /></div>";
+        let id_gap = 'gap_'+l.index;
+        let elem = "<div><div></div><input type='checkbox' id='"+id+"' /><label for='"+ id + "'>"+l.name +
+            "</label></div><input type=\"number\" id=\""+id_gap+"\" value=\""+l.offset+"\"/></div>";
 
         $(".check-container").append(elem);
         $("#"+id).change(checkChange);
         $("#"+id).prop('checked', l.selected);
-
-        if (l.selected) {
-            let id_gap = 'gap_'+l.index;
-            let elemO = "<label for=\""+id_gap+"\">"+l.name + "</label><input type=\"number\" id=\""+id_gap+"\" value=\""+l.offset+"\"/>";
-
-            $("#offset_container").append(elemO);
-        }
-    });
-}
-function createOffset() {
-    $("#offset_container").empty();
-    countries.forEach( l => {
-        if (l.selected) {
-            let id_gap = 'gap_'+l.index;
-            let elemO = "<label for=\""+id_gap+"\">"+l.name + "</label><input type=\"number\" id=\""+id_gap+"\" value=\""+l.offset+"\"/>";
-
-            $("#offset_container").append(elemO);
-        }
     });
 }
 
 function checkChange(evt) {
     let id = evt.target.id.replace('id_', '');
-    countries[id].selected = evt.target.checked;
-    createOffset();
+    countries.find(c=>c.index === +id).selected = evt.target.checked;
+    createChecks();
     createChart();
 }
 
