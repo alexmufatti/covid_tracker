@@ -155,11 +155,22 @@ function createChecks() {
         }
     });
 }
+function createOffset() {
+    $("#offset_container").empty();
+    countries.forEach( l => {
+        if (l.selected) {
+            let id_gap = 'gap_'+l.index;
+            let elemO = "<label for=\""+id_gap+"\">"+l.name + "</label><input type=\"number\" id=\""+id_gap+"\" value=\""+l.offset+"\"/>";
+
+            $("#offset_container").append(elemO);
+        }
+    });
+}
 
 function checkChange(evt) {
     let id = evt.target.id.replace('id_', '');
     countries[id].selected = evt.target.checked;
-    createChecks();
+    createOffset();
     createChart();
 }
 
