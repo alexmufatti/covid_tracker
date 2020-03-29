@@ -6,8 +6,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./style.css" >
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-21196458-4"></script>
     <script>
@@ -27,9 +27,9 @@
 <div style="height: 100vh;">
     <div class="row" style="height: 100%;">
         <canvas id="myChart" class="col-md-10"></canvas>
-        <div class="col-md-2"  style="height: 100%; overflow: scroll">
-            <button id="btn">Update</button>
-            <div>
+        <div class="col-md-2"  style="height: 100%">
+            <button id="btn" class="btn btn-primary">Update</button>
+            <div class="collection-container">
                 <div><label for="confirmed"></label><input type='checkbox' id="confirmed" checked  />Confirmed</div>
                 <div><label for="deaths"></label><input type='checkbox' id="deaths"  />Deaths</div>
                 <div><label for="recovered"></label><input type='checkbox' id="recovered" />Recovered</div>
